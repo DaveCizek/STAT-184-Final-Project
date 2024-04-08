@@ -1,0 +1,56 @@
+---
+title: "Preliminary Exploration"
+output: 
+  html_notebook:
+    fig_height: 7
+    fig_width: 10
+---
+```{r message=FALSE}
+rm(list = ls())  # good hygiene
+# call packages
+library(tidyverse)
+library(dcData)
+library(esquisse)
+```
+# Guiding Question
+##### How many United States Military Veterans are utilizing a majority (to be defined later) of their benefits, and what variables play a factor in how the benefits are utilized?
+
+# Become acquainted with your data sources
+### Where did you find them?
+##### - The primary data source was found on the VA (Veterans' Affairs) website. They have a data portal with a plethora of information. The other data set also came from the VA website (I'm very thankful that they have so much publically available data). This other data was found on a claims section of the site.
+### Who collected/maintains them? 
+##### - The first data set is a joint effort completed by the VA office itself along with help from Westat. The second data set is an internal report prepared by the VA to track the statuses of all claims submitted by Veterans
+### When and why were they originally collected? 
+##### - The NSV (National Survey of Veterans) was completed in 2010 and the data was collected at Veterans Affairs offices around the country. The second is an internal report completed weekly dating all the way back to 2004. I decided to use a report from September 27, 2010 to try to land in the same timeframe that the NSV was published, in October 2010.
+### What does a case represent in each data source, and how many total cases are available?
+##### - A case in the NSV is a single respondant. A case in the internal report is a region of the country (though the data is not tidy. This will need some major work).
+### What are some of the variables that you plan to use? 
+##### - I plan to use the survey results to trend how informed veterans are regarding their benefits along with utilization. Some variables are knowledge of a benefit, usage of the benefit, thoroughness of the knowledge, etc. I will then attempt to compare this information to a Veteran's claim status to see if the two are correlated. I will also attempt to use age, length of service, age upon discharge to try to correlate age with utilization.
+
+# Explore intuition related to the research question:
+### Create some informative plots and summary statistics.
+```{r}
+ggplot(Publicdata2010) +
+  aes(x = AGREE8) +
+  geom_histogram(bins = 30L, fill = "#112446") +
+  labs(
+    x = "Knowledge of VA Health Benefits (1=Completely Agree,
+    5=Completely Disagree)"
+  ) +
+  theme_bw()
+```
+```{r}
+ggplot(Publicdata2010) +
+  aes(x = EDUCVA) +
+  geom_histogram(bins = 10L, fill = "#112446") +
+  scale_x_continuous(trans = "log2") +
+  labs(x = "Used ANY VA Education Benefits (1 = Yes, 2 = No)") +
+  coord_flip() +
+  theme_bw()
+```
+### Describe preliminary observations and intuition about the research question.
+##### Based on very fundamental data pulled from the data sources, it's quite easy to see that Veterans are not aware of their benefits and aren't utilizing them to the full extent because of this. After some thorough cleaning of the data source, I can see that this will be a very powerful tool on answering some questions I have and hopefully drawing conclusions to try to help out the Veteran Community going forward.
+
+# TWO Data Sources (at least): 
+##### My primary data source will be a 2010 report from the National Survey on Veterans. This is a massive spreadsheet with over 8,500 cases and over 220 variables. On the VA website, there is a codebook to go along with the spreadsheet so that the variables can be understood.
+##### I will also be utilizing the Monday Morning Workload Reports located on the VA website which details advanced claims data weekly. I will be adding more as I need to make sure my data is thorough.
